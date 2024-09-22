@@ -76,3 +76,10 @@ const LearnerSubmissions = [
     },
   },
 ];
+//Function to check  if course id of assignment group correct. Throws an error if not.
+
+function getLearnerData(course, assignmentGroup, submissions) {
+    // Validate course_id
+    if (assignmentGroup.course_id !== course.id) {
+      throw new Error("Invalid assignment group: course_id does not match.");
+    }
