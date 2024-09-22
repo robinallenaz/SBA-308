@@ -79,56 +79,69 @@ const LearnerSubmissions = [
 //Function to check if course id of assignment group correct. Throws an error if not.
 
 function getLearnerData(course, assignmentGroup, submissions) {
-    // Validate course_id
-    if (assignmentGroup.course_id !== course.id) {
-      throw new Error("Invalid assignment group: course_id does not match.");
+    try {
+      // Validate course_id
+      if (assignmentGroup.course_id !== course.id) {
+        throw new Error("Invalid assignment group: course_id does not match.");
+      }
+  
+      // Declaring an empty object to store results
+      const results = {};
+  
+      // Process each submission using forEach (1 loop type)
+      submissions.forEach((submission) => {
+        const assignment = assignmentGroup.assignments.find(
+          (a) => a.id === submission.assignment_id
+        );
+  
+        // Check if assignment exists and is due
+        if (assignment) {
+          if (new Date(assignment.due_at) >= new Date()) {
+            const learnerId = submission.learner_id;
+            const pointsPossible = assignment.points_possible;
+  
+            // Calculate score
+            let score = submission.submission.score;
+            if (new Date(submission.submission.submitted_at) > new Date(assignment.due_at)) {
+              score -= pointsPossible * 0.1; // Deduct 10% for late submission
+            }
+  
+            // Calculate percentage
+            const percentage = score / pointsPossible;
+  
+            // Store the percentage score
+            results[learnerId].assignments[assignment.id] = percentage;
+            results[learnerId].totalScore += score;
+            results[learnerId].totalPoints += pointsPossible;
+          } else {
+            console.log(`Assignment ${assignment.id} is not due yet.`);
+          }
+        } else {
+          console.log(`Assignment with ID ${submission.assignment_id} does not exist.`);
+        }
+      });
+  
+      // Calculate average for each learner using a for...in loop (2nd loop type)
+      for (const learnerId in results) {
+        const learnerData = results[learnerId];
+        learnerData.avg =
+          learnerData.totalPoints > 0
+            ? learnerData.totalScore / learnerData.totalPoints
+            : 0;
+      }
+  
+      return Object.values(results).map((learner) => {
+        const { id, avg, assignments } = learner;
+        return {
+          id,
+          avg,
+          ...assignments,
+        };
+      });
+    } catch (error) {
+      console.error("An error occurred:", error.message);
     }
-
-//Declaring an empty object to store results
-
-const results = {};
-
- // Process each submission using forEach (1 loop type)
-  submissions.forEach((submission) => {
-    const assignment = assignmentGroup.assignments.find(
-      (a) => a.id === submission.assignment_id
-    );
-
- // Check if assignment exists and is due
- if (assignment && new Date(assignment.due_at) >= new Date()) {
-    const learnerId = submission.learner_id;
-    const pointsPossible = assignment.points_possible;
-    continue;
- }
-
- // Calculate score
- let score = submission.submission.score;
- if (new Date(submission.submission.submitted_at) > new Date(assignment.due_at)) {
-   score -= pointsPossible * 0.1; // Deduct 10% for late submission
- }
-
- // Calculate percentage
- const percentage = (score / pointsPossible);
-
- // Store the percentage score
- results[learnerId].assignments[assignment.id] = percentage;
- results[learnerId].totalScore += score;
- results[learnerId].totalPoints += pointsPossible;
-}
-}
- // Calculate average for each learner
- for (const learnerId in results) {
-    const learnerData = results[learnerId];
-    learnerData.avg = learnerData.totalPoints > 0 ? (learnerData.totalScore / learnerData.totalPoints) : 0;
   }
-  return Object.values(results).map(learner => {
-    const { id, avg, assignments } = learner;
-    return {
-      id,
-      avg,
-      ...assignments
-    };
-  });
-
-const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
-console.log(result);
+  
+  const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+  console.log(result);
