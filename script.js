@@ -76,7 +76,7 @@ const LearnerSubmissions = [
     },
   },
 ];
-//Function to check  if course id of assignment group correct. Throws an error if not.
+//Function to check if course id of assignment group correct. Throws an error if not.
 
 function getLearnerData(course, assignmentGroup, submissions) {
     // Validate course_id
@@ -88,7 +88,7 @@ function getLearnerData(course, assignmentGroup, submissions) {
 
 const results = {};
 
-// Process each submission
+// Process each submission using a for loop (1 loop type)
 for (const submission of submissions) {
     const assignment = assignmentGroup.assignments.find(a => a.id === submission.assignment_id);
 
@@ -107,3 +107,10 @@ for (const submission of submissions) {
 
  // Calculate percentage
  const percentage = (score / pointsPossible);
+
+ // Store the percentage score
+ results[learnerId].assignments[assignment.id] = percentage;
+ results[learnerId].totalScore += score;
+ results[learnerId].totalPoints += pointsPossible;
+}
+}
