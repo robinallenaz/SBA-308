@@ -87,3 +87,7 @@ function getLearnerData(course, assignmentGroup, submissions) {
 //Declaring an empty object to store results
 
 const results = {};
+
+// Process each submission
+for (const submission of submissions) {
+    const assignment = assignmentGroup.assignments.find(a => a.id === submission.assignment_id);
