@@ -88,9 +88,11 @@ function getLearnerData(course, assignmentGroup, submissions) {
 
 const results = {};
 
-// Process each submission using a for loop (1 loop type)
-for (const submission of submissions) {
-    const assignment = assignmentGroup.assignments.find(a => a.id === submission.assignment_id);
+ // Process each submission using forEach (1 loop type)
+  submissions.forEach((submission) => {
+    const assignment = assignmentGroup.assignments.find(
+      (a) => a.id === submission.assignment_id
+    );
 
  // Check if assignment exists and is due
  if (assignment && new Date(assignment.due_at) >= new Date()) {
