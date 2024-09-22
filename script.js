@@ -98,3 +98,12 @@ for (const submission of submissions) {
     const pointsPossible = assignment.points_possible;
     continue;
  }
+
+ // Calculate score
+ let score = submission.submission.score;
+ if (new Date(submission.submission.submitted_at) > new Date(assignment.due_at)) {
+   score -= pointsPossible * 0.1; // Deduct 10% for late submission
+ }
+
+ // Calculate percentage
+ const percentage = (score / pointsPossible);
