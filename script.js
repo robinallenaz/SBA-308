@@ -83,3 +83,7 @@ function getLearnerData(course, assignmentGroup, submissions) {
     if (assignmentGroup.course_id !== course.id) {
       throw new Error("Invalid assignment group: course_id does not match.");
     }
+
+//Declaring an empty object to store results
+
+const results = {};
