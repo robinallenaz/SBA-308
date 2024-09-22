@@ -114,3 +114,9 @@ for (const submission of submissions) {
  results[learnerId].totalPoints += pointsPossible;
 }
 }
+
+ // Calculate average for each learner
+ for (const learnerId in results) {
+    const learnerData = results[learnerId];
+    learnerData.avg = learnerData.totalPoints > 0 ? (learnerData.totalScore / learnerData.totalPoints) : 0;
+  }
