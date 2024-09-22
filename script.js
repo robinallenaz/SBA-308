@@ -91,3 +91,8 @@ const results = {};
 // Process each submission
 for (const submission of submissions) {
     const assignment = assignmentGroup.assignments.find(a => a.id === submission.assignment_id);
+
+ // Check if assignment exists and is due
+ if (assignment && new Date(assignment.due_at) >= new Date()) {
+    const learnerId = submission.learner_id;
+    const pointsPossible = assignment.points_possible;
