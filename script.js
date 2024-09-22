@@ -127,6 +127,6 @@ for (const submission of submissions) {
       ...assignments
     };
   });
-}
+
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 console.log(result);
