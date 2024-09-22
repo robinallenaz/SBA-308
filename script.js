@@ -128,3 +128,5 @@ for (const submission of submissions) {
     };
   });
 }
+const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+console.log(result);
