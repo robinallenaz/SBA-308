@@ -96,3 +96,5 @@ for (const submission of submissions) {
  if (assignment && new Date(assignment.due_at) >= new Date()) {
     const learnerId = submission.learner_id;
     const pointsPossible = assignment.points_possible;
+    continue;
+ }
