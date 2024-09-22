@@ -1,7 +1,7 @@
 
 ## Overview
 
-This is a JS program designed to process and analyze learner submission data for a course, calculate the average scores for each learner based on their submissions, and take into account assignment due dates and late submissions. It outputs the results in a structured format.
+This is a JS program designed to process and analyze learner submission data for a course. It calculates the average scores for each learner based on their submissions, taking into account assignment due dates and late submissions. It outputs the results in a structured format.
 
 ## Features
 
